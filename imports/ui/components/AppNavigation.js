@@ -3,6 +3,7 @@ import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
 import PublicNavigation from './PublicNavigation.js';
 import AuthenticatedNavigation from './AuthenticatedNavigation.js';
+// import fav from './favicon.png';
 
 const renderNavigation = hasUser => (hasUser ? <AuthenticatedNavigation /> : <PublicNavigation />);
 
@@ -10,7 +11,9 @@ const AppNavigation = ({ hasUser }) => (
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to="/">Application Name</Link>
+
+        <Link to="/">Userful</Link>
+
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>

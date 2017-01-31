@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import { Row, Col, Button } from 'react-bootstrap';
 import DocumentsList from '../containers/DocumentsList.js';
+import SearchBox from '../components/SearchBox.js';
 
-const Documents = () => (
+const Documents = ({query}) => (
   <div className="Documents">
     <Row>
       <Col xs={ 12 }>
@@ -16,7 +17,8 @@ const Documents = () => (
             >New Document</Button>
           </Link>
         </div>
-        <DocumentsList />
+        <SearchBox query={query}/>
+        <DocumentsList query={query}/>
       </Col>
     </Row>
   </div>

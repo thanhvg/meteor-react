@@ -7,6 +7,8 @@ import Loading from '../components/Loading.js';
 const composer = (params, onData) => {
   const subscription = Meteor.subscribe('documents.list');
   if (subscription.ready()) {
+    // $text not supported
+    // const documents = Documents.find({$text:{$search:"really"}}).fetch();
     const documents = Documents.find().fetch();
     onData(null, { documents });
   }
