@@ -4,8 +4,8 @@ import Documents from '../../api/documents/documents.js';
 import DocumentsList from '../components/DocumentsList.js';
 import Loading from '../components/Loading.js';
 
-const composer = (params, onData) => {
-  const subscription = Meteor.subscribe('documents.list');
+const composer = ({query}, onData) => { // query is the props.query passed to it in pages/Documents
+  const subscription = Meteor.subscribe('documents.list', query);
   if (subscription.ready()) {
     // $text not supported
     // const documents = Documents.find({$text:{$search:"really"}}).fetch();

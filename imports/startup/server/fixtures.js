@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Accounts } from 'meteor/accounts-base';
 
+console.log('inside fixtures');
 if (!Meteor.isProduction) {
   const users = [{
     email: 'admin@admin.com',

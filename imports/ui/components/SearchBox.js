@@ -1,25 +1,37 @@
 import React from 'react';
 import {InputGroup, Form, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 
-// const SearchBox = ({query}) => (
-//     <Form inline>
-//       <FormControl type="text" defaultValue={query} name="search"/>
-//       <Button type="submit" className="pull-right"> Search
-//       </Button>
-//     </Form>
-//   );
+export default class SearchBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
+    handleChange(event) {
+     this.setState({value: event.target.value});
+    //  console.log(this.state.value);
+   }
 
-const SearchBox = ({query}) => (
-    <FormGroup>
-      <InputGroup>
-        <FormControl type="text" defaultValue={query} name="search"/>
-        <InputGroup.Button>
-          <Button >Search</Button>
-        </InputGroup.Button>
-      </InputGroup>
-    </FormGroup>
-  );
+   handleSubmit(event) {
+     this.props.handle(this.state.value);
+     event.preventDefault();
+   }
 
-
-export default SearchBox;
+   render() {
+    const {query, handle} = this.props;
+    return (
+      <form  onSubmit={this.handleSubmit}>
+      <FormGroup>
+        <InputGroup>
+          <FormControl type="text" defaultValue={query} name="search" onChange={this.handleChange}/>
+          <InputGroup.Button>
+            <Button type="submit">Search</Button>
+          </InputGroup.Button>
+        </InputGroup>
+      </FormGroup>
+      </form>
+      );
+    }
+  }

@@ -4,7 +4,7 @@ import Documents from '../../api/documents/documents.js';
 import ViewDocument from '../pages/ViewDocument.js';
 import Loading from '../components/Loading.js';
 
-const composer = ({ params }, onData) => {
+const composer = ({ params }, onData) => { // this is the props.params passed by react-router
   const subscription = Meteor.subscribe('documents.view', params._id);
 
   if (subscription.ready()) {

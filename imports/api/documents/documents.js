@@ -34,3 +34,14 @@ Factory.define('document', Documents, {
   title: () => 'Factory Title',
   body: () => 'Factory Body',
 });
+
+
+// if (Meteor.isServer) {
+//   Meteor.startup(function () {
+//     Documents._ensureIndex({
+//       "title": "text",
+//       "body": "text"
+//     });
+//     console.log('indexxing');
+//   });
+// }
