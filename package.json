@@ -67,6 +67,7 @@
     "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
     "busboy": "^0.2.14",
+    "child-process": "^1.0.2",
     "connect-busboy": "0.0.2",
     "jquery": "^2.2.4",
     "jquery-validation": "^1.15.1",

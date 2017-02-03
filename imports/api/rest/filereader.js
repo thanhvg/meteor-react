@@ -24,10 +24,8 @@ module.exports = function(tarball) {
         var problem = reportparser(myfile);
         problem.systemId = getSystemIdFromFileName(tarball);
         problem.details.tarball = getTarballName(tarball);
-
+        problem.ticket = genTicketId();
         console.log(problem.systemId +  '  ' + problem.details.tarball );
-
-
       });
     }
   });
@@ -41,4 +39,23 @@ function getSystemIdFromFileName(fullpath) {
 function getTarballName(fullpath) {
   var pattern = /...-....-....-....-\d*.tar.gz/;
   return pattern.exec(fullpath)[0];
+}
+
+function genTicketId() {
+  var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    for( var i=0; i < 9; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function getMacAddress(problem) {
+  var exec = require('child_process').exec;
+  exec('./dm-gen-info -decode ' + problem.systemId,
+      function(error, stdout, stderr){
+        console.log(stdout);
+        problem.mac = stdout;
+      });
 }
