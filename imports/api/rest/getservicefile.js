@@ -4,8 +4,12 @@ import bodyParser from 'body-parser';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import busboy from 'connect-busboy';
-const serviceFilePath = "/tmp/cloud-service";
 
+
+const serviceFilePath = "/tmp/cloud-service";
+var filereader = require('./filereader')
+
+let fname = "";
 if (Meteor.isServer) {
 
   Picker.middleware(bodyParser.json());
@@ -16,7 +20,7 @@ if (Meteor.isServer) {
 
     if (request.method == 'POST') {
 
-      console.log(request.busboy);
+      // console.log(request.busboy);
 
       request.busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 
@@ -32,6 +36,7 @@ if (Meteor.isServer) {
 
             var saveTo = path.join(serviceFilePath, path.basename(filename));
             file.pipe(fs.createWriteStream(saveTo));
+            fname = filename;
 
           }
         });
@@ -44,7 +49,9 @@ if (Meteor.isServer) {
         response.setHeader('connection', "close");
         response.writeHead(204, {'Content-Type': 'text/plain'});
         response.end();
-
+        // console.log(arguments);
+        filereader(serviceFilePath + '/' + fname);
+        
       });
 
     } else {
