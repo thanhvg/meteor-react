@@ -4,10 +4,11 @@ import bodyParser from 'body-parser';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import busboy from 'connect-busboy';
-
+import Problems from '../problems/problems.js';
+import me from './callbacktest.js';
 
 const serviceFilePath = "/tmp/cloud-service";
-var filereader = require('./filereader')
+var filereader = require('./filereader');
 
 let fname = "";
 if (Meteor.isServer) {
@@ -43,16 +44,25 @@ if (Meteor.isServer) {
 
       });
 
-      request.busboy.on('finish', function() {
+      request.busboy.on('finish', Meteor.bindEnvironment(function() {
 
         console.log("finished");
         response.setHeader('connection', "close");
         response.writeHead(204, {'Content-Type': 'text/plain'});
         response.end();
         // console.log(arguments);
-        filereader(serviceFilePath + '/' + fname);
-        
-      });
+        filereader(serviceFilePath + '/' + fname,
+            Meteor.bindEnvironment((err, problem) => {
+              Problems.insert(problem);
+            }));
+        // me('this sucks',
+        //   (one, two) => {
+        //     console.log('back here ' + one);
+        //     console.log('more' + two);
+        //     Problems.insert({"foo":"bar"});
+        // });
+
+      }));
 
     } else {
       response.setHeader('connection', "close");
@@ -61,4 +71,9 @@ if (Meteor.isServer) {
     }
   });
 
+}
+
+
+function insertToDb(problem) {
+  Problems.insert(problem);
 }

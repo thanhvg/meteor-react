@@ -21,6 +21,9 @@ const AuthenticatedNavigation = () => (
       <LinkContainer to="/cloud">
         <NavItem eventKey={ 2 } href="/cloud">My Cloud</NavItem>
       </LinkContainer>
+      <LinkContainer to="/service">
+        <NavItem eventKey={ 2 } href="/service">Service</NavItem>
+      </LinkContainer>
     </Nav>
     <Nav pullRight>
       <NavDropdown eventKey={ 3 } title={ userName() } id="basic-nav-dropdown">

@@ -1,4 +1,4 @@
-module.exports = function(tarball) {
+module.exports = function(tarball, callback) {
   var tar = require("tar"),
     fs = require("fs"),
     zlib = require("zlib"),
@@ -23,9 +23,10 @@ module.exports = function(tarball) {
         // console.log(myfile);
         var problem = reportparser(myfile);
         problem.systemId = getSystemIdFromFileName(tarball);
-        problem.details.tarball = getTarballName(tarball);
+        problem.tarball = getTarballName(tarball);
         problem.ticket = genTicketId();
-        console.log(problem.systemId +  '  ' + problem.details.tarball );
+        console.log(problem.systemId +  '  ' + problem.tarball );
+        getMacAddress(problem, callback);
       });
     }
   });
@@ -51,11 +52,13 @@ function genTicketId() {
     return text;
 }
 
-function getMacAddress(problem) {
+function getMacAddress(problem, callback) {
   var exec = require('child_process').exec;
-  exec('./dm-gen-info -decode ' + problem.systemId,
+  exec('dm-gen-info -decode ' + problem.systemId,
       function(error, stdout, stderr){
-        console.log(stdout);
-        problem.mac = stdout;
+        console.log(stdout, error, stderr);
+        problem.mac = stdout.replace('\n','');
+        console.log(problem);
+        callback(stderr, problem);
       });
 }

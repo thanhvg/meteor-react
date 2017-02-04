@@ -7,6 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import App from '../../ui/layouts/App.js';
 import Documents from '../../ui/pages/Documents.js';
 import Cloud from '../../ui/pages/Cloud.js';
+import Service from '../../ui/pages/Service.js';
 import NewDocument from '../../ui/pages/NewDocument.js';
 import EditDocument from '../../ui/containers/EditDocument.js';
 import ViewDocument from '../../ui/containers/ViewDocument.js';
@@ -37,6 +38,7 @@ Meteor.startup(() => {
         <Route name="viewDocument" path="/documents/:_id" component={ ViewDocument } onEnter={ authenticate } />
 
         <Route name="cloud" path="/cloud" component={ Cloud } onEnter={ authenticate } />
+        <Route name="service" path="/service" component={ Service } onEnter={ authenticate } />
 
         <Route name="login" path="/login" component={ Login } />
         <Route name="recover-password" path="/recover-password" component={ RecoverPassword } />
