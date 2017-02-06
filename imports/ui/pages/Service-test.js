@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import {Table, Row, Col, Button } from 'react-bootstrap';
 import DocumentsList from '../containers/DocumentsList.js';
 import SearchBox from '../components/SearchBox.js';
-import MyModal from '../components/Modal.js';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 export default class Cloud extends React.Component {
@@ -13,11 +12,10 @@ export default class Cloud extends React.Component {
     // this.handleClick = this.handleClick.bind(this);
   }
 
-  actionButton(cell, row, formatExtraData, rowIdx) {
+  actionButton(cell, row) {
     // return  (<Button onClick={() => console.log(cell)}>Action</Button>);
     // console.log(arguments);
-    // return  (<Button bsSize="small" >{arguments[1].other + ' ' + row.id}</Button>);
-    return  (<MyModal cell={cell} row={row} formatExtraData={formatExtraData} rowIdx={rowIdx}/>);
+    return  (<Button bsSize="small" >{arguments[1].other + ' ' + row.id}</Button>);
   }
 
   render() {
@@ -30,15 +28,10 @@ export default class Cloud extends React.Component {
             </div>
           </Col>
         </Row>
-        <BootstrapTable data={problems} keyField='_id'
-        search={true}
-        options = {options}
-        striped
-        hover>
-          <TableHeaderColumn dataField='systemId'>System ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='date'>Report Time</TableHeaderColumn>
-          <TableHeaderColumn dataField='category'>Catergory</TableHeaderColumn>
-          <TableHeaderColumn dataField='whatWereDoing' >Doing What</TableHeaderColumn>
+        <BootstrapTable data={products} striped hover>
+          <TableHeaderColumn isKey dataField='id'>Product ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='price'>Product Price</TableHeaderColumn>
           <TableHeaderColumn dataField='action' dataFormat={this.actionButton}  export={ false }>Action</TableHeaderColumn>
         </BootstrapTable>
       </div>
@@ -46,7 +39,26 @@ export default class Cloud extends React.Component {
   }
 }
 
-const problems = [
+
+
+const products = [];
+
+function addProducts(quantity) {
+  const startId = products.length;
+  for (let i = 0; i < quantity; i++) {
+    const id = startId + i;
+    products.push({
+      id: id,
+      name: 'Item name ' + id,
+      price: 2100 + i,
+      other: 'hidden' + i
+    });
+  }
+}
+
+addProducts(5);
+
+const problems[
 
   {
     "_id" : "Sk3qqgtnrufoXrphE",
@@ -66,7 +78,7 @@ const problems = [
     "description" : "USB Cannot Mount\n\nFlash Content will not play in a Browser Session.\n\nMy VPN IP# 172.26.0.178",
     "browser" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/538.15 (KHTML, like Gecko) Version/8.0 Safari/538.15",
     "tarball" : "E00-5572-09AA-3FF1-1485965869.tar.gz"
-  },
+  }
   {
     "_id": "HG4TAknMDtPErTeEq",
     "systemId": "E00-5572-09AA-3FF1",
@@ -86,10 +98,4 @@ const problems = [
     "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/538.15 (KHTML, like Gecko) Version/8.0 Safari/538.15",
     "tarball": "E00-5572-09AA-3FF1-1485366752.tar.gz"
   }
-];
-
-
-
-const options = {
-  clearSearch: true
-};
+]
